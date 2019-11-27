@@ -18,7 +18,7 @@ def parse_media(media_in_json):
     # add comment info
     comments = parse_comments(media_in_json)
     media.comments_count = len(comments)
-    media.comments = '_[COMMENT_SEP]_'.join(comments) # into a string
+    media.comments = '_[COMMENT_SEP]_'.join(comments)  # into a string
 
     # add carousel info
     carousel = parse_carousel(media_in_json)
@@ -51,6 +51,7 @@ def parse_comments(media_json):
         comments.append(edge['node']['text'])
 
     return comments
+
 
 def parse_carousel(media_json):
     """Parse carousel from media_json page.

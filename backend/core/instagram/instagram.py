@@ -5,7 +5,9 @@ import time
 
 from igramscraper.instagram import Instagram
 from igramscraper.exception.instagram_exception import InstagramException
-from igramscraper.exception.instagram_not_found_exception import InstagramNotFoundException
+from igramscraper.exception.instagram_not_found_exception import (
+    InstagramNotFoundException,
+)
 
 from .parser import parse_media
 
@@ -13,14 +15,15 @@ from .parser import parse_media
 def get_media_by_url(insta_obj, media_url, proxy=None):
     """Get media page content from url. This essentially behaves as
     ``igscraper.Instagram.get_media_by_url``. However, the original code is
-    broken  and it cannot fetch the comments and carousel. This code fixes those.
+    broken  and it cannot fetch the comments and carousel. This code fixes
+    those.
 
     Args:
       insta_obj (Instagram): instagram object
       media_url (str): an instagram URL of image you want to get the
           information from
-      (Optional) proxy (dict): a proxy for the request. Use this to avoid being blocked.
-          See ``ProxyPoolExecutor`` for more details
+      (Optional) proxy (dict): a proxy for the request. Use this to avoid being
+          blocked. See ``ProxyPoolExecutor`` for more details
 
     Returns:
       Media: media object with attributes
@@ -40,7 +43,8 @@ def get_media_by_url(insta_obj, media_url, proxy=None):
 
     # Make request to get the information
     time.sleep(insta_obj.sleep_between_requests)
-    response = __req.get(url, headers=insta_obj.generate_headers(insta_obj.user_session))
+    response = __req.get(
+        url, headers=insta_obj.generate_headers(insta_obj.user_session))
 
     if Instagram.HTTP_NOT_FOUND == response.status_code:
         raise InstagramNotFoundException(

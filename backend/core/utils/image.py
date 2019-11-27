@@ -12,8 +12,6 @@ def imresize(x, imsize):
     return np.array(Image.fromarray(x).resize(imsize, PIL.Image.BICUBIC))
 
 
-
-
 def get_thumbnail(url, imsize=None, proxies=None):
     """ download the image and return a numpy array representing the image
 

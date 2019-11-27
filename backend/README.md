@@ -7,11 +7,20 @@ Requirements
 
 Install `conda` for package management by visit the anaconda website (https://www.anaconda.com/), go to Download > Python 3.7 version. Once you have installed this, you should be able to run "conda" command in your terminal. 
 
-> conda
+```bash
+$ conda
+```
 
 Install required packages for Python using `conda`:
 
-> conda env create --file envname.yaml
+```bash
+$ conda env create --file project_tt_env.yaml
+```
+
+If new package needs to be added, you can use `conda install <package_name>` or `pip install <package_name>`. Then, 
+```bash
+$ conda env export > project_tt_env.yaml
+```
 
 # backend structure
 
@@ -27,4 +36,21 @@ Install required packages for Python using `conda`:
 |   |-- core.ml
 |   └-- utils
 |-- notebooks
+```
+
+# Testing
+
+- We use `pytest`
+
+```bash
+$ pytest project_TT/backend
+```
+
+
+# Coding guide
+
+- we use `flake8` for formatting.
+
+```bash
+$ flake8 project_TT/backend
 ```
