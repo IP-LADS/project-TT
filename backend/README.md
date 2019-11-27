@@ -26,21 +26,28 @@ $ conda env export > project_tt_env.yaml
 
 ```bash
 |-- data
-|   |-- london_20191124.csv
-|   |-- images
-|   └-- thumbnails
-|-- core
-|   |-- core.analytics
-|   |-- core.db
-|   |-- core.instagram
-|   |-- core.ml
-|   └-- utils
-|-- notebooks
+|   |-- london
+|   |   └-- 20191124
+|   |   |   |-- london_20191124.csv
+|   |   |   |-- images
+|   |   |   └-- thumbnails
+|   |   └-- ...
+|   |-- ...
+|-- front end
+|   └-- ...
+|-- backend
+|   |-- core
+|   |   |-- analytics
+|   |   |-- db
+|   |   |-- instagram
+|   |   |-- ml
+|   |   └-- utils
+|   └-- notebooks
 ```
 
 # Testing
 
-- We use `pytest`
+- We use `pytest` for testing the code.
 
 ```bash
 $ pytest project_TT/backend
