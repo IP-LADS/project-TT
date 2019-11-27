@@ -1,5 +1,6 @@
 node_modules/
 __pycache__
+*.ipynb
 .ipynb_checkpoints
 *~
 cache
@@ -9,3 +10,5 @@ cache
 playground
 images
 thumbnails
+data
+.DS_Store
