@@ -17,6 +17,11 @@ Install required packages for Python using `conda`:
 $ conda env create --file project_tt_env.yaml
 ```
 
+Then activate the environment by running:
+```bash
+$ source activate project_IP
+```
+
 If new package needs to be added, you can use `conda install <package_name>` or `pip install <package_name>`. Then, 
 ```bash
 $ conda env export > project_tt_env.yaml
