@@ -2,6 +2,7 @@ import datetime
 
 from core.envs import START_TIME
 
+
 def parse_comments(comment_row):
     """ Comments """
     # handle the case when the row is "nan"

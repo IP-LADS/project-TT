@@ -13,7 +13,7 @@ from .parser import (
 class User:
     def __init__(self, id, username, full_name):
         if isinstance(id, float):
-            user_id = ""
+            id = ""
         if isinstance(username, float):
             username = ""
         if isinstance(full_name, float):

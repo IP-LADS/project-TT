@@ -1,4 +1,10 @@
-""" Information related to persistence """
+""" Scraper to Information related to persistence """
+import shutil
+import os
+import pathlib
+
+import pandas as pd
+
 
 DATA_ATTRIBUTES = [
     'media_id',
@@ -69,3 +75,44 @@ def media_to_row(media):
         media.location_slug,
     ]
     return row
+
+
+def create_dataset(data_dir):
+    """ combine csvs from hierarchical directories into one under `data_dir`
+
+    Args:
+      data_dir (str): the directory for data. This should be
+      `/path/to/project/project_TT/data`
+
+    """
+
+    # create csv
+    data_path = pathlib.Path(data_dir)
+    csvs = [k for k in data_path.rglob('*_location.csv')]
+    dfs = []
+    for csv in csvs:
+        df = pd.read_csv(csv, quotechar="'")
+        dfs.append(df)
+    dataset = pd.concat(dfs, ignore_index=True)
+    dataset.to_csv(
+        os.path.join(data_dir, 'data.csv'), quotechar="'", index=False)
+
+    # create directories
+    image_path = data_path / 'images'
+    thumbnail_path = data_path / 'thumbnails'
+    image_path.mkdir(exist_ok=True)
+    thumbnail_path.mkdir(exist_ok=True)
+
+    # copy images
+    for img in data_path.rglob('images/*.jpeg'):
+        if str(img).find(str(image_path)) > -1:
+            continue
+        shutil.copy2(img, image_path / os.path.basename(img))
+
+    # copy thumbnails
+    for img in data_path.rglob('thumbnails/*.jpeg'):
+        if str(img).find(str(thumbnail_path)) > -1:
+            continue
+        shutil.copy2(img, thumbnail_path / os.path.basename(img))
+
+    return dataset, data_path
