@@ -5,6 +5,7 @@ import pathlib
 
 import pandas as pd
 
+from core.db.models import MediaImage
 
 DATA_ATTRIBUTES = [
     'media_id',
@@ -77,7 +78,7 @@ def media_to_row(media):
     return row
 
 
-def create_dataset(data_dir):
+def aggregate_dataset(data_dir):
     """ combine csvs from hierarchical directories into one under `data_dir`
 
     Args:
@@ -116,3 +117,18 @@ def create_dataset(data_dir):
         shutil.copy2(img, thumbnail_path / os.path.basename(img))
 
     return dataset, data_path
+
+
+def load_dataset(root_dir, load_image=False, load_thumbnail=False):
+    # list to keep track of them
+    root_dir = pathlib.Path(root_dir)
+    dataset = pd.read_csv(root_dir / 'data/data.csv', quotechar="'")
+    media_images = []
+    for _, row in dataset.iterrows():
+        media_image = MediaImage.create_from_row(row)
+        if load_image:
+            media_image.load_image(root_dir=root_dir)
+        if load_thumbnail:
+            media_image.load_thumbnail(root_dir=root_dir)
+        media_images.append(media_image)
+    return media_images
