@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "max-line-length": {
+      "options": [120]
+    },
+    "no-trailing-whitespace": [true, "always"],
+    "prefer-const": [true, { "destructuring": "any" }],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "space-before-function-paren": [true, "never"],
+    "trailing-comma": [true, { "multiline": "always", "singleline": "never" }],
+    "quotemark": [true, "single"]
+  }
+}
