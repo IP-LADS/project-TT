@@ -1,0 +1,122 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Project TT
+  license:
+    name: MIT
+servers:
+  - url: http://localhost
+paths:
+  /metadata:
+    get:
+      summary: Get necessary search metadata
+      operationId: getMetadata
+      tags:
+        - metadata
+      responses:
+        '200':
+          description: A collection of necessary metadata objects
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Metadata"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /search:
+    post:
+      summary: Request to search over criteria
+      operationId: search
+      tags:
+        - search
+      requestBody:
+        description: Search criteria
+        content: 
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/SearchCriteria'
+      responses:
+        '200':
+          description: List of search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchResult"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Source:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        displayName:
+          type: string
+    Metadata:
+      type: object
+      properties:
+        sources:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Source"
+    Location:
+      type: object
+      properties:
+        latitude: 
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    SearchCriteria:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        timeframe:
+          type: object
+          properties:
+            dateFrom:
+              type: string
+              format: date
+            dateTo:
+              type: string
+              format: date
+        sources:
+          type: array
+          items: 
+            type: integer
+            format: int32
+    SearchResult:
+      type: object
+      properties:
+        locationName:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        score:
+          type: number
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
