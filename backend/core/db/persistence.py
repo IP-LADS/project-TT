@@ -87,7 +87,7 @@ def aggregate_dataset(data_dir):
 
     """
 
-    # create csv
+    # create dataframe from all csvs
     data_path = pathlib.Path(data_dir)
     csvs = [k for k in data_path.rglob('*_location.csv')]
     dfs = []
@@ -95,8 +95,22 @@ def aggregate_dataset(data_dir):
         df = pd.read_csv(csv, quotechar="'")
         dfs.append(df)
     dataset = pd.concat(dfs, ignore_index=True)
-    dataset.to_csv(
-        os.path.join(data_dir, 'data.csv'), quotechar="'", index=False)
+
+    target_csv = data_path / 'data.csv'
+
+    # if data.csv already exists, update the table
+    if target_csv.exists():
+        existing_ids = pd.read_csv(target_csv, quotechar="'").media_id
+        new_data = dataset[~dataset.media_id.isin(existing_ids)]
+        new_data.to_csv(
+            target_csv, quotechar="'",
+            mode='a', header=False, index=False)
+        print(f'Appended {len(new_data)} elements to data.csv')
+    else :
+        existing_ids = []
+        new_data = dataset
+        new_data.to_csv(target_csv, quotechar="'", index=False)
+        print('Created data.csv')
 
     # create directories
     image_path = data_path / 'images'
@@ -105,15 +119,24 @@ def aggregate_dataset(data_dir):
     thumbnail_path.mkdir(exist_ok=True)
 
     # copy images
+    existing_ids = list(existing_ids)
     for img in data_path.rglob('images/*.jpeg'):
+        img_id = os.path.basename(img).split('.')[0]
+        if img_id in existing_ids:
+            continue
         if str(img).find(str(image_path)) > -1:
             continue
+
         shutil.copy2(img, image_path / os.path.basename(img))
 
     # copy thumbnails
     for img in data_path.rglob('thumbnails/*.jpeg'):
+        img_id = os.path.basename(img).split('.')[0]
+        if img_id in existing_ids:
+            continue
         if str(img).find(str(thumbnail_path)) > -1:
             continue
+
         shutil.copy2(img, thumbnail_path / os.path.basename(img))
 
     return dataset, data_path
