@@ -24,7 +24,7 @@ $ source activate project_IP
 
 If new package needs to be added, you can use `conda install <package_name>` or `pip install <package_name>`. Then, 
 ```bash
-$ conda env export > project_tt_env.yaml
+$ conda env export > project_tt_env.yml
 ```
 
 # backend structure
