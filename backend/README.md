@@ -34,7 +34,7 @@ If new package needs to be added, you can use `conda install <package_name>` or
 $ conda env export > project_tt_env.yml
 ```
 
-# Project Structure (Backend)
+# Project Structure
 
 ```bash
 |-- data
@@ -71,7 +71,7 @@ import sys
 sys.path.append('/path/to/project_TT/backend')
 ```
 
-## autoreloading
+## Auto-reloading
 
 By default, the notebook will spawn a new internal python which does not keep
 track of changes in the code. If you want the changes to be reflected, include
@@ -93,7 +93,7 @@ $ pytest project_TT/backend
 
 # Data
 
-Our dataset is saved externally -- i.e. the `project_TT/data` is not tracked by
+Our dataset is saved externally, i.e. the `project_TT/data` is not tracked by
 `git` and hence you need to download it separately. Check the slack channel for
 the instruction.
 
