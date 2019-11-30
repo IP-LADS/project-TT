@@ -1,9 +1,11 @@
 import React from 'react';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Select } from 'antd';
 import { action } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
 import { TestStore } from '../../stores';
+
+const { Option } = Select;
 
 interface IProps {
   testStore?: TestStore;
@@ -20,15 +22,28 @@ export class AppBody extends React.Component<IProps> {
   public render() {
     return (
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={8}>
           <div
             style={{ color: this.props.testStore.colourActive ? 'red' : '' }}
           >
-            Toggle my colour!
+            Toggle the colour of this text!
           </div>
         </Col>
 
-        <Col span={12}>
+        <Col span={8}>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder='Select a person'
+            optionFilterProp='children'
+          >
+            <Option value='jack'>Jack</Option>
+            <Option value='lucy'>Lucy</Option>
+            <Option value='tom'>Tom</Option>
+          </Select>
+        </Col>
+
+        <Col span={8}>
           <Button
             type='primary'
             loading={this.props.testStore.isMakingServerCall}
