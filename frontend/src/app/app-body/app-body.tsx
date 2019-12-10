@@ -26,7 +26,7 @@ export class AppBody extends React.Component<IProps> {
           <div
             style={{ color: this.props.testStore.colourActive ? 'red' : '' }}
           >
-            Toggle the colour of this text!
+            Toggle the colour of this text NEW!
           </div>
         </Col>
 
