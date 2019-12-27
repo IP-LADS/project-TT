@@ -1,11 +1,9 @@
 import React from 'react';
-import { Row, Col, Button, Select } from 'antd';
-import { action } from 'mobx';
+import { Row, Col, Card } from 'antd';
 import { observer, inject } from 'mobx-react';
 
 import { TestStore } from '../../stores';
-
-const { Option } = Select;
+import ResultList from '../result-list';
 
 interface IProps {
   testStore?: TestStore;
@@ -14,45 +12,21 @@ interface IProps {
 @inject('testStore')
 @observer
 export class AppBody extends React.Component<IProps> {
-  @action
-  private toggleColour = () => {
-    this.props.testStore.fakeServerCall();
-  };
-
   public render() {
     return (
-      <Row gutter={16}>
-        <Col span={8}>
-          <div
-            style={{ color: this.props.testStore.colourActive ? 'red' : '' }}
-          >
-            Toggle the colour of this text NEW!
+      <div style={{minWidth: '1366px', display: 'flex'}}>
+        <div style={{width: '25%'}}>
+          <div style={{backgroundColor: 'red', height:'100vh'}}>
+            Filter area
           </div>
-        </Col>
-
-        <Col span={8}>
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder='Select a person'
-            optionFilterProp='children'
-          >
-            <Option value='jack'>Jack</Option>
-            <Option value='lucy'>Lucy</Option>
-            <Option value='tom'>Tom</Option>
-          </Select>
-        </Col>
-
-        <Col span={8}>
-          <Button
-            type='primary'
-            loading={this.props.testStore.isMakingServerCall}
-            onClick={this.toggleColour}
-          >
-            Toggle colour
-          </Button>
-        </Col>
-      </Row>
+        </div>
+        <div style={{width: '2vh'}}/>
+        <div style={{width: '100%', padding: '0px', backgroundColor: 'blue', height:'100vh'}}>
+          <Card style={{width: 'auto', margin: '2vh', height: '96vh'}}>
+            <ResultList/>
+          </Card>
+        </div>
+      </div>
     );
   }
 }
