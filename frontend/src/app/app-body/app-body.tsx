@@ -14,19 +14,19 @@ interface IProps {
 export class AppBody extends React.Component<IProps> {
   public render() {
     return (
-      <Row gutter={32} style={{width: '1366px'}}>
-        <Col span={6}>
+      <div style={{minWidth: '1366px', display: 'flex'}}>
+        <div style={{width: '25%'}}>
           <div style={{backgroundColor: 'red', height:'100vh'}}>
             Filter area
           </div>
-        </Col>
-
-        <Col span={18} style={{padding: '0px', backgroundColor: 'blue', height:'100vh'}}>
-          <Card style={{margin: '2vh', height: '96vh'}}>
+        </div>
+        <div style={{width: '2vh'}}/>
+        <div style={{width: '100%', padding: '0px', backgroundColor: 'blue', height:'100vh'}}>
+          <Card style={{width: 'auto', margin: '2vh', height: '96vh'}}>
             <ResultList/>
           </Card>
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   }
 }
