@@ -1,0 +1,1 @@
+export const RESULT_LIST_MAX_SIZE: number = 20;

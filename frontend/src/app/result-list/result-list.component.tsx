@@ -3,6 +3,7 @@ import { Button, Result as ResultContent} from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import { ResultStore, Result } from '../../stores/resultStore';
+import { RESULT_LIST_MAX_SIZE } from '../../App.constants';
 import { ResultListEntry } from './';
 
 interface IProps {
@@ -24,13 +25,16 @@ export class ResultList extends React.Component<IProps> {
       />;
 
     return (
-      <>
+      <div style={{height: '91vh', overflow: 'scroll'}}>
         {
           results.length ?
-            results.map((r: Result) => <ResultListEntry result={r}/>) :
-            emptyResultContent
+              results
+              .slice(0, RESULT_LIST_MAX_SIZE)
+              .map((r: Result) => <ResultListEntry result={r}/>)
+            :
+              emptyResultContent
         }
-      </>
+      </div>
     );
   }
 }
